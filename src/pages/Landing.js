@@ -3,6 +3,7 @@ import Layout from "../components/Layout";
 import Hero from "../components/Landing/Hero";
 import WeAre from "../components/Landing/WeAre";
 import Promo from "../components/Landing/Promo";
+import TrandingPoster from "../components/Landing/TrandingPoster";
 import { Tabs } from "../components/Tabs";
 import StickyBanner from "../components/StickyBanner";
 import {
@@ -29,9 +30,7 @@ const Landing = () => {
         />
         <WeAre />
         <Promo title="Whats trending " size={"xlarge"}>
-          <picture>
-            <img src={""} alt="What's trending" />
-          </picture>
+          <TrandingPoster />
         </Promo>
         <Promo
           background={"/images/promo1"}
