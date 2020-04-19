@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Loader from 'react-loader-spinner';
 import { TrandingPosterStyled, FadeInPicture } from "./styles/Styled";
 import { AsyncBridge } from "./helpers/AsyncBridge";
