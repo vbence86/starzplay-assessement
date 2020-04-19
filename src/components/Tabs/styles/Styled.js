@@ -44,7 +44,9 @@ export const IconStyled = styled(Icon)`
   };
   transition: fill ease .1s;
   ${TabStyled}:hover & {
-    fill: ${props => props.theme.components.tabs.tab.font.color.active};
+    fill: ${props => (props.isDisabled && !props.isActive)
+      ? props.theme.components.tabs.tab.font.color.default 
+      : props.theme.components.tabs.tab.font.color.active};
   }
 `;
 
@@ -59,7 +61,9 @@ export const LabelStyled = styled.span`
   text-transform: capitalize;
   transition: all ease .1s;
   ${TabStyled}:hover & {
-    color: ${props => props.theme.components.tabs.tab.font.color.active};
+    color: ${props => (props.isDisabled && !props.isActive)
+      ? props.theme.components.tabs.tab.font.color.default 
+      : props.theme.components.tabs.tab.font.color.active};
   }
 `;
 
@@ -67,4 +71,5 @@ export const TabContentContainerStyled = styled.div`
   color:  ${props => props.theme.components.tabs.color};
   text-align: ${props => props.theme.components.tabs.align || "center"};
   padding: ${props => props.theme.components.tabs.padding};
+  min-height: 400px;
 `;
