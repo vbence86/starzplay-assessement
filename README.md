@@ -126,7 +126,7 @@ const Tabs = props => (
   )
 );
 ```
-- [ ] The implementation follows the our code style guide and matches the file and folder structure of other live components
+- [ ] The implementation follows our code style guide and matches the file and folder structure of other live components
 ```
 /Tabs
   /styles
