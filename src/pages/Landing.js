@@ -1,8 +1,10 @@
 import React from "react";
+import { withStore } from 'react-context-hook';
 import Layout from "../components/Layout";
 import Hero from "../components/Landing/Hero";
 import WeAre from "../components/Landing/WeAre";
 import Promo from "../components/Landing/Promo";
+import TrandingPoster from "../components/Landing/TrandingPoster";
 import { Tabs } from "../components/Tabs";
 import StickyBanner from "../components/StickyBanner";
 import {
@@ -12,9 +14,9 @@ import {
 } from "../components/Landing/Tabs";
 
 const tabsLayout = () => [
-  { tabTitle: "Subscription", tabIcon: "user", tabContent: <Tab1 /> },
-  { tabTitle: "Devices", tabIcon: "devices", tabContent: <Tab2 /> },
-  { tabTitle: "Download", tabIcon: "download", tabContent: <Tab3 /> }
+  { tabTitle: "Subscription", tabIcon: "user", tabContent: <Tab1 />, visibleInMiniMode: true },
+  { tabTitle: "Devices", tabIcon: "devices", tabContent: <Tab2 />, visibleInMiniMode: false },
+  { tabTitle: "Download", tabIcon: "download", tabContent: <Tab3 />, visibleInMiniMode: true }
 ];
 
 const Landing = () => {
@@ -29,9 +31,7 @@ const Landing = () => {
         />
         <WeAre />
         <Promo title="Whats trending " size={"xlarge"}>
-          <picture>
-            <img src={""} alt="What's trending" />
-          </picture>
+          <TrandingPoster />
         </Promo>
         <Promo
           background={"/images/promo1"}
@@ -52,4 +52,4 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+export default withStore(Landing);

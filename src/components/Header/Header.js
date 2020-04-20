@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useStore } from 'react-context-hook';
 import { Dropdown } from "../Dropdown";
 import Menu from "../Menu";
 import { Logo } from "../Logo";
@@ -23,6 +24,7 @@ function getLanguageSelectorItems() {
 
 function Header() {
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
+  const [isMiniModeActive, setIsMiniModeActive] = useStore('miniMode', false);
 
   useEffect(() => {
     document.body.classList.toggle("noScrolling", isBurgerMenuOpen);
@@ -30,6 +32,11 @@ function Header() {
 
   function handleOpened() {
     setIsBurgerMenuOpen(!isBurgerMenuOpen);
+  }
+
+  function handleMiniMode() {
+    const className = 'miniMode';
+    setIsMiniModeActive(document.body.classList.toggle(className, !document.body.classList.contains(className)));
   }
 
   return (
@@ -47,22 +54,26 @@ function Header() {
             explore: {
               text: "Explore",
               url: "#",
-              role: "link"
+              role: "link",
+              isVisible: !isMiniModeActive
             },
             toggleMiniMode: {
               text: "Toggle Mini Mode",
               url: "#",
-              role: "button"
+              role: "button",
+              onClick: handleMiniMode
             }
           }}
           link
         />
-        <Dropdown
-          items={getLanguageSelectorItems()}
-          icon={"languageGlobe"}
-          optionsPosition={"center"}
-          selectedItem={0}
-        />
+        { !isMiniModeActive 
+            ? <Dropdown
+                items={getLanguageSelectorItems()}
+                icon={"languageGlobe"}
+                optionsPosition={"center"}
+                selectedItem={0}
+              />
+            : null}
       </nav>
     </HeaderStyled>
   );
