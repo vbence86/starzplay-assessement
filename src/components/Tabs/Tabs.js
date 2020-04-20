@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import { useStore } from 'react-context-hook';
 import {
   TabsContainerStyled,
@@ -53,6 +53,8 @@ const Tabs = props => {
 
     props.onTabSelected && props.onTabSelected(tab);
   };
+
+  cached[selectedTab] = selectedTab;
 
   return (
     <TabsContainerStyled>
