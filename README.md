@@ -100,3 +100,73 @@ link to external websites. Just leave those links as you find them (and ignore t
 functional link in this challenge.
 - We know browser support is something to be taken into account. For this challenge, feel free to use any new technology
 you find appropriate, but please let us know if you use anything that requires certain version of a given browser.
+
+# Issue Description for Tabs component
+
+## Summary
+To implement a React Component that realises a custom container with tabs. Each tab has a separate content linked to it, but only the selected one must be rendered. When the user toggles between the selected tab, the related content must be updated. The Component is planned to be integarated into the Landing Page, this would allow the content creators to communicate large volume of information in the same location and provide the users with an easier access to the data they are looking for.
+
+## User story
+As a **Project Owner**
+I'd like to add a component with clickable tabs to the **Landing Page** 
+So that **we can categorize and disribute information**
+into separate tabs and the user can select and see only the pieces of information they might be interested in.
+
+## Acceptance Criteria
+- [ ] The component is implemented in `src/components/Tabs`
+- [ ] The component realises the following modern React component implementation structure
+```
+const Tabs = props => (
+  const [selectedTab, setSelectedTab] = useState();
+  ...
+  return (
+    <>
+      ...
+    </>
+  )
+);
+```
+- [ ] The implementation follows the our code style guide and matches the file and folder structure of other live components
+```
+/Tabs
+  /styles
+    Styled.js
+  index.js
+  Tabs.js
+```
+- [ ] All updated code has been passed the build flow in practice
+  * eslint
+  * unit tests
+- [ ] The component does not introduce technical debt
+- [ ] The component is manually tested
+
+## BDD Scenarios
+- [ ] **Rendered on the Landing Page:**
+GIVEN Tabs component is added to the Landing Page
+WHEN the page loads
+THEN Tabs component must be rendered
+
+- [ ] **Default Content:**
+GIVEN The Tabs component is rendered
+WHEN the Tabs component is at default state
+THEN it should display the content of the first tab
+AND the first tab header should be active
+ 
+- [ ] **Tab Selection:**
+GIVEN The user clicks on a the tab header
+WHEN tab header is not active (selected)
+THEN The selected tab content should be updated 
+AND the selected tab header should activate
+AND the previously selected tab header should deactivate
+
+- [ ] **Async Content:**
+GIVEN The tab content is not immediately available and requires the execution of an async process
+WHEN the user selects the new tab 
+THEN an animated spinner should be shown in place of the content
+AND the selected tab header should activate
+AND the previously selected tab header should deactivate
+
+- [ ] **Async Content Cont.:**
+GIVEN The Tab content is being fetched and the animated spinner rendered
+WHEN the async operation completes
+THEN the content must be updated
