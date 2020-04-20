@@ -1,4 +1,5 @@
 import React from "react";
+import { withStore } from 'react-context-hook';
 import Layout from "../components/Layout";
 import Hero from "../components/Landing/Hero";
 import WeAre from "../components/Landing/WeAre";
@@ -13,9 +14,9 @@ import {
 } from "../components/Landing/Tabs";
 
 const tabsLayout = () => [
-  { tabTitle: "Subscription", tabIcon: "user", tabContent: <Tab1 /> },
-  { tabTitle: "Devices", tabIcon: "devices", tabContent: <Tab2 /> },
-  { tabTitle: "Download", tabIcon: "download", tabContent: <Tab3 /> }
+  { tabTitle: "Subscription", tabIcon: "user", tabContent: <Tab1 />, visibleInMiniMode: true },
+  { tabTitle: "Devices", tabIcon: "devices", tabContent: <Tab2 />, visibleInMiniMode: false },
+  { tabTitle: "Download", tabIcon: "download", tabContent: <Tab3 />, visibleInMiniMode: true }
 ];
 
 const Landing = () => {
@@ -51,4 +52,4 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+export default withStore(Landing);

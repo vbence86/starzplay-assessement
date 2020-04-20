@@ -1,4 +1,5 @@
 import React from "react";
+import { useStore } from 'react-context-hook';
 import {
   ButtonStyled,
   HeadingStyled,
@@ -6,6 +7,8 @@ import {
 } from "./styles/Styled";
 
 function StickyBanner({ className, title }) {
+  const [isMiniModeActive] = useStore('miniMode', false);
+
   return (
     <StickyBannerStyled className={className}>
       {title && (
@@ -28,13 +31,15 @@ function StickyBanner({ className, title }) {
         buttonType="primary"
         ariaLabel="Mobile"
       />
-      <ButtonStyled
-        label="Facebook"
-        icon="facebook"
-        buttonType={"primary"}
-        backgroundColor={"#4760a0"}
-        ariaLabel="Facebook"
-      />
+      { !isMiniModeActive
+        ? <ButtonStyled
+            label="Facebook"
+            icon="facebook"
+            buttonType={"primary"}
+            backgroundColor={"#4760a0"}
+            ariaLabel="Facebook"
+          />
+        : null}
     </StickyBannerStyled>
   );
 }

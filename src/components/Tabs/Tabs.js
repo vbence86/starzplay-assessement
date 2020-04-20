@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
+import { useStore } from 'react-context-hook';
 import {
   TabsContainerStyled,
   TabListStyled,
@@ -32,60 +33,56 @@ const Tab = props => {
   );
 };
 
-class Tabs extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedTab: props.selectedTab || 0,
-      selectedHeader: props.selectedTab || 0,
-    };
-  }
+const Tabs = props => {
+  const [selectedTab, setSelectedTab] = useState(0);
+  const [selectedHeader, setSelectedHeader] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isMiniModeActive] = useStore('miniMode', false);
+  const { layout, size } = props;
 
-  handleClick = async (tab, index) => {
+  const TabContent = () => layout[selectedTab].tabContent;
+  
+  const handleClick = async (tab, index) => {
     // no further user actions allowed whilst the content is being loaded
-    if (this.state.isLoading) return;
+    if (isLoading) return;
 
-    this.setState({
-      isLoading: true,
-      selectedHeader: index,
-    });
-    this.setState({ selectedTab: await calculateTabToShow(index) });
-    this.setState({ isLoading: false });
+    setIsLoading(true);
+    setSelectedHeader(index);
+    setSelectedTab(await calculateTabToShow(index));
+    setIsLoading(false);
 
-    this.props.onTabSelected && this.props.onTabSelected(tab);
+    props.onTabSelected && props.onTabSelected(tab);
   };
 
-  render() {
-    const { layout, size } = this.props;
-    const TabContent = () => layout[this.state.selectedTab].tabContent;
-    return (
-      <TabsContainerStyled>
-        <TabListStyled size={size}>
-          {layout.map((tab, index) => (
-            <Tab
-              isDisabled={this.state.isLoading}
-              isActive={this.state.selectedHeader === index}
-              key={tab.tabTitle}
-              label={tab.tabTitle}
-              onClick={() => this.handleClick(tab, index)}
-              icon={tab.tabIcon}
-            />
-          ))}
-        </TabListStyled>
-        <TabContentContainerStyled>
-          { this.state.isLoading
-              ? <Loader
-                 type="TailSpin"
-                 color="#00ffff"
-                 height={100}
-                 width={100}
-                />
-              : <TabContent />
-          }
-        </TabContentContainerStyled>
-      </TabsContainerStyled>
-    );
-  }
+  return (
+    <TabsContainerStyled>
+      <TabListStyled size={size}>
+        {layout
+            .filter(tab => !isMiniModeActive || tab.visibleInMiniMode)
+            .map((tab, index) => (
+              <Tab
+                isDisabled={isLoading}
+                isActive={selectedHeader === index}
+                key={tab.tabTitle}
+                label={tab.tabTitle}
+                onClick={() => handleClick(tab, index)}
+                icon={tab.tabIcon}
+              />
+            ))}
+      </TabListStyled>
+      <TabContentContainerStyled>
+        { isLoading
+            ? <Loader
+               type="TailSpin"
+               color="#00ffff"
+               height={100}
+               width={100}
+              />
+            : <TabContent />
+        }
+      </TabContentContainerStyled>
+    </TabsContainerStyled>
+  );
 }
 
 export default Tabs;

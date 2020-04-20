@@ -41,13 +41,16 @@ const List = ({
               <DdStyled display={display}>{data[item]}</DdStyled>
             </React.Fragment>
           ))
-        : Object.keys(data).map(item => (
+        : Object.keys(data)
+          .filter(item => data[item].isVisible !== false)
+          .map(item => (
             <LiStyled key={item} display={display}>
               {link ? (
                 <a
                   href={data[item].url || ""}
                   role={data[item].role || ""}
                   title={data[item].title || ""}
+                  onClick={data[item].onClick}
                 >
                   {data[item].text || ""}
                 </a>
